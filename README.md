@@ -1,0 +1,1 @@
+# mybatis_mysql_generator
