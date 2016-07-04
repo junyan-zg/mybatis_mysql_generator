@@ -1,16 +1,11 @@
-package cn.eatammy.common.Dao;
+package ${basepackage}.${module}.dao;
 
-import cn.eatammy.common.domain.BaseDomain;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
 
-/**
- * create by 郭旭辉
- * @param <T>
- */
-public interface BaseDao<T extends BaseDomain> {
+public interface BaseDao<T> {
 
     /**
      * 保存单一对象，如果要保存多个对象集合，
@@ -300,4 +295,9 @@ public interface BaseDao<T extends BaseDomain> {
      */
     public Class<T> getEntityClass();
 
+    public List<T> findAllWithFKs();
+    
+    public List<T> findAllWithFKsLazy();
+    
+    
 }

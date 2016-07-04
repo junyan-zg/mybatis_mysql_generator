@@ -21,7 +21,7 @@ public class ForeignKey implements java.io.Serializable{
 	protected String   relationShip   = null;
 	protected String   firstRelation  = null;
 	protected String   secondRelation = null;
-	protected Table parentTable ;
+	protected Table parentTable;
 	protected String   tableName;
 	protected ListHashtable columns ;
 	protected ListHashtable parentColumns;
@@ -193,11 +193,19 @@ public class ForeignKey implements java.io.Serializable{
 	public ListHashtable getParentColumns() {
 		return parentColumns;
 	}
-	public String getParentColumnsOne() {
+	public String getParentColumnsOneColumnName() {
 		return (String) parentColumns.getOrderedValue(0);
 	}
-	public String getColumnsOne() {
+	public String getColumnsOneColumnName() {
 		return (String) columns.getOrderedValue(0);
+	}
+	public Column getParentColumnsOne() {
+		Table table = getParentTable();
+		return table.getColumnBySqlName(getParentColumnsOneColumnName());
+	}
+	public Column getColumnsOne() {
+		Table table = TableFactory.getInstance().getTable(tableName);
+		return table.getColumnBySqlName(getColumnsOneColumnName());
 	}
 	public boolean getHasImportedKeyParentColumn(String aColumn) {
 		

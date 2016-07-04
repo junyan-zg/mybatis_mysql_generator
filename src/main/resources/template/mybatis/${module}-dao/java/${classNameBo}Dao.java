@@ -6,10 +6,10 @@
  * $Id:  ${className}Dao.java ${now?string('yyyy-MM-dd HH:mm:ss')} $
  */
 <#assign classNameLower = className?uncap_first>   
-package ${basepackage}.${persistence};
+package ${basepackage}.${module}.${persistence};
 
-import cn.thinkjoy.common.Dao.BaseDao;
-import ${basepackage}.domain.${className};
+import java.util.List;
+import ${basepackage}.${module}.domain.${className};
 
 public interface ${className}Dao extends BaseDao<${className}>{
 	
@@ -19,4 +19,8 @@ public interface ${className}Dao extends BaseDao<${className}>{
 	</#if>
 </#list>
 
+<#list table.importedKeys.associatedTables?values as foreignKey>
+<#assign column = foreignKey.parentColumnsOne>
+    public List<${className}> findByFK_${column.sqlName}(${column.possibleShortJavaType} fk_${column.sqlName});
+</#list>
 }

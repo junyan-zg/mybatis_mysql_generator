@@ -25,12 +25,14 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
 
+
 import java.io.Serializable;
 import java.util.*;
 
 public class ${className} implements Serializable {
 <#list table.columns as column>
 <#if column='id'||column='creator'||column='createDate'||column='lastModifier'||column='lastModDate'||column='status'>
+	private ${column.possibleShortJavaType} ${column.columnNameFirstLower};
 <#else>
 	/**
 	 * ${column.remarks}
@@ -81,6 +83,13 @@ public class ${className} implements Serializable {
 
     </#if>
 <#if column='id'||column='creator'||column='createDate'||column='lastModifier'||column='lastModDate'||column='status'>
+	public void set${column.columnName}(${column.possibleShortJavaType} value) {
+	    this.${column.columnNameFirstLower} = value;
+	}
+	
+	public ${column.possibleShortJavaType} get${column.columnName}() {
+	    return this.${column.columnNameFirstLower};
+	}
 <#else>
     public void set${column.columnName}(${column.possibleShortJavaType} value) {
         this.${column.columnNameFirstLower} = value;
@@ -100,8 +109,8 @@ public class ${className} implements Serializable {
 	<#assign fkPojoClass = fkSqlTable.className>
 	<#assign fkPojoClassVar = fkPojoClass?uncap_first>
 
-	private Set<${fkPojoClass}> ${fkPojoClassVar}s = new HashSet<${fkPojoClass}>(0);
-	${foreignKey.relationShip}
+	private List<${fkPojoClass}> ${fkPojoClassVar}s = new ArrayList<${fkPojoClass}>(0);
+
 	</#list>
 </#macro>
 
@@ -112,11 +121,11 @@ public class ${className} implements Serializable {
 	<#assign fkPojoClass = fkSqlTable.className>
 	<#assign fkPojoClassVar = fkPojoClass?uncap_first>
 
-	public void set${fkPojoClass}s(Set<${fkPojoClass}> ${fkPojoClassVar}){
+	public void set${fkPojoClass}s(List<${fkPojoClass}> ${fkPojoClassVar}){
 		this.${fkPojoClassVar}s = ${fkPojoClassVar};
 	}
 	
-	public Set<${fkPojoClass}> get${fkPojoClass}s() {
+	public List<${fkPojoClass}> get${fkPojoClass}s() {
 		return ${fkPojoClassVar}s;
 	}
 	</#list>
@@ -130,7 +139,7 @@ public class ${className} implements Serializable {
 	<#assign fkPojoClassVar = fkPojoClass?uncap_first>
 	
 	private ${fkPojoClass} ${fkPojoClassVar};
-	${foreignKey.relationShip}
+
 	</#list>
 </#macro>
 
